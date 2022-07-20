@@ -13,25 +13,10 @@ export class ProduitService {
   constructor(@InjectRepository(ProduitEntity) 
   private ProduitRepository: Repository<ProduitEntity>){}
 
-  createProduit(createProduitDto: ProduitDto, request: UserEntity){
-      const newProduit = this.ProduitRepository.create(createProduitDto);
-      newProduit.user = request
-    return this.ProduitRepository.save(createProduitDto);
-  }
-
   async findAllProduct(user): Promise<ProduitEntity[]>{
     if (user.role === UserRoleEnum.ADMIN)
       return await this.ProduitRepository.find();
     return await this.ProduitRepository.find(user);
-  }
-  
-
-  async findOneProduct(id: number, user){
-    const product = await this.ProduitRepository.findOne(id);
-    if(! product) {
-      throw new NotFoundException(`Le cv d'id ${id} n'existe pas`);
-    }
-    return product;
   }
 
   ModifProduit(id: number, updateProduitDto: UpdateProduitDto){

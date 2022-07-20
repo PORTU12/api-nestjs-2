@@ -46,8 +46,8 @@ export class ProduitController {
 
     @Get()
     @UseGuards(AuthGuard('jwt'))
-    async AfficheDesProduits(@Req() req){
-      const Produser = req.user;
+    async AfficheDesProduits(@User() user){
+      const Produser = user.user;
       return await this.produitService.findAllProduct();
     }
 
